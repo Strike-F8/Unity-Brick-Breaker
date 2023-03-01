@@ -8,6 +8,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
     }
 
+    public void Awake()
+    {
+        FindObjectOfType<Canvas>().enabled = false;
+    }
+
     public void Play()
     {
         FindObjectOfType<GameManager>().NewGame();

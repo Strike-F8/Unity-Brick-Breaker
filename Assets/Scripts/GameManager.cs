@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         ResetStats();
 
         LoadLevel(this.level);
+        FindObjectOfType<Canvas>().enabled = true;
     }
 
     public void LoadLevel(int level)
