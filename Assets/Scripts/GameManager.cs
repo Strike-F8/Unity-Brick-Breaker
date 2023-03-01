@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int level)
     {
+        FindObjectOfType<Canvas>().enabled = true;
         this.level = level;
         this.levelText.text = $"Level {this.level}";
         SceneManager.LoadScene("Level" + level);
@@ -57,11 +58,6 @@ public class GameManager : MonoBehaviour
     {
         this.ball.ResetBall();
         this.paddle.ResetPaddle();
-
-        //for(int i = 0; i < this.bricks.Length; i++)
-        //{
-        //    this.bricks[i].ResetBrick();
-       // }
     }
 
     private void ResetStats()
@@ -77,6 +73,8 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        this.level = -1;
+        FindObjectOfType<Canvas>().enabled = false;
         SceneManager.LoadScene("GameOver");
         // NewGame();
     }
@@ -89,7 +87,10 @@ public class GameManager : MonoBehaviour
         if (level < 3)
             LoadLevel(++level);
         else
+        {
+            FindObjectOfType<Canvas>().enabled = false;
             SceneManager.LoadScene("GameWin");
+        }
     }
 
     public void Hit(Brick brick)
@@ -103,8 +104,9 @@ public class GameManager : MonoBehaviour
 
     private void CheckGameStatus()
     {
-        if (GetBricksRemaining() <= 0)
-            CompleteLevel();
+        if (this.level > 0) // Check if the player is currently playing a level
+            if (GetBricksRemaining() <= 0)
+                CompleteLevel();
     }
     private int GetBricksRemaining()
     {
